@@ -1,0 +1,7 @@
+.jumbotron {
+  text-align: left;
+  color: #ffffff;
+  padding: 100px;
+  padding-left: 50px;
+  background-image: url('books.jpg');
+}
