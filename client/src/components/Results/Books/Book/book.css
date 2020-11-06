@@ -1,0 +1,23 @@
+.book-card{
+    border-bottom: 1px solid #777777;
+    padding-left: 2%;
+    padding-bottom: 2%;
+}
+
+.book-title h5{
+    font-weight: 800;
+    margin-top: 0;
+}
+
+.book-subtitle h6{
+    font-style: italic;
+    margin-top: 0;
+}
+
+.book-image{
+    margin-top: 1%;
+}
+
+.result-btn{
+    margin:2px;
+}

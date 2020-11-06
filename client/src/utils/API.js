@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default {
+const API = {
   // Gets books from the Google API
   getBooks: function(q) {
     return axios.get("/api/google", { params: { q: "title:" + q } });
@@ -18,3 +18,5 @@ export default {
     return axios.post("/api/books", bookData);
   }
 };
+
+export default API;
