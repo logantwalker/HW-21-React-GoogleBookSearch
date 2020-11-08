@@ -7,10 +7,31 @@ import 'materialize-css'
 const Saved = () => {
     const [booksObj, setBooks] = useState({
         books: [],
-        message: "Save some books to get started!"
+        message: "Save some books to get started!",
+        rerender: false
     });
 
+    useEffect(()=>{
+        getSavedBooks();
+        initRenderCheck();
+        console.log('useEffect')
+    },[]);
     
+    const initRenderCheck = () =>{
+        setBooks({
+            books: booksObj.books,
+            message: booksObj.message,
+            rerender: false
+        })
+    }
+
+    const didDelete = () =>{
+        setBooks({
+            books: booksObj.books,
+            message: booksObj.message,
+            rerender: true
+        })
+    }
     
 
     const getSavedBooks = () => {

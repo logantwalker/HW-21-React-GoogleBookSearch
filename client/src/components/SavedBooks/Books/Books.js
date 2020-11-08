@@ -8,7 +8,7 @@ const Books = (props) => {
             return (
                 <Book
                     key={book.googleId}
-                    bookId={book.googleId}
+                    bookId={book._id}
                     title={book.title}
                     subtitle={book.subtitle}
                     link={book.link}

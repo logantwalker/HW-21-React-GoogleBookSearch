@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Button} from 'react-materialize';
+import { Row, Col, Button } from 'react-materialize';
 import API from '../../../../utils/API';
 
 import 'materialize-css';
@@ -15,6 +15,11 @@ const Book = (props) => {
         image: props.image
     }
 
+    const handleBookDelete = id => {
+        API.deleteBook(id);
+    };
+
+
     return (
         <Row className='book-card'>
             <Col s={9} className='book-title'>
@@ -22,9 +27,12 @@ const Book = (props) => {
             </Col>
             <Col s={3}>
                 <a href={props.link} className="result-btn waves-effect waves-light btn">View</a>
-                <Button 
+                <Button
+                    onClick={()=>{
+                        handleBookDelete(bookObj.id)
+                    }}
                     className='result-btn'>
-                        Delete
+                    Delete
                 </Button>
             </Col>
             <Col s={12} className='book-subtitle'>

@@ -8,7 +8,10 @@ const SavedBooks = (props) => {
 
     let results;
     if (props.res.length) {
-        results = (<Books books={props.res}/>)
+        results = (
+            <Books 
+                books={props.res}/>
+                )
     }
     else {
         results = <h5 className='center-align'>{props.message}</h5>
