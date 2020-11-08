@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Search from '../../components/Search/Search';
-import Results from '../../components/Results/Results';
+import Book from '../../components/Results/Book/Book';
+import { Icon, Row} from 'react-materialize';
 import API from '../../utils/API';
 import 'materialize-css'
 
@@ -37,10 +38,56 @@ const Home = () => {
             );
     };
 
+    const handleBookSave = (id) => {
+        const book = searchState.books.find(book => book.id === id);
+
+        API.saveBook({
+            googleId: book.id,
+            title: book.volumeInfo.title,
+            subtitle: book.volumeInfo.subtitle,
+            link: book.volumeInfo.infoLink,
+            authors: book.volumeInfo.authors,
+            description: book.volumeInfo.description,
+            image: book.volumeInfo.imageLinks.thumbnail
+        }).then(() => getBooks());
+
+    }
+
+    let results;
+    if (searchState.books.length) {
+        results = (
+            searchState.books.map(book => {
+                return (
+                    <Book
+                        key={book.id}
+                        bookId={book.id}
+                        title={book.volumeInfo.title}
+                        subtitle={book.volumeInfo.subtitle}
+                        link={book.volumeInfo.infoLink}
+                        authors={book.volumeInfo.authors.join(", ")}
+                        description={book.volumeInfo.description}
+                        image={book.volumeInfo.imageLinks.thumbnail}
+                        click={() => handleBookSave(book.id)}
+                    />
+                )
+            })
+        )
+    }
+    else {
+        results = <h5 className='center-align'>{searchState.message}</h5>
+    }
+
     return (
         <div className='container'>
             <Search change={(e) => handleFormInput(e)} click={() => getBooks()} />
-            <Results res={searchState.books} message={searchState.message} />
+            <div className='search-card'>
+                <Row className='card-header'>
+                    <h6 className='card-title'> <Icon tiny>book</Icon>Results</h6>
+                </Row>
+                <Row className='search-results'>
+                    {results}
+                </Row>
+            </div>
         </div>
     );
 }
