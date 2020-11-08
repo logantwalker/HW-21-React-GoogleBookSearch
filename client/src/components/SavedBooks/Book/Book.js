@@ -1,24 +1,10 @@
 import React from 'react';
 import { Row, Col, Button } from 'react-materialize';
-import API from '../../../../utils/API';
+
 
 import 'materialize-css';
 
 const Book = (props) => {
-    const bookObj = {
-        id: props.bookId,
-        title: props.title,
-        subtitle: props.subtitle,
-        link: props.link,
-        authors: props.authors,
-        description: props.description,
-        image: props.image
-    }
-
-    const handleBookDelete = id => {
-        API.deleteBook(id);
-    };
-
 
     return (
         <Row className='book-card'>
@@ -28,9 +14,7 @@ const Book = (props) => {
             <Col s={3}>
                 <a href={props.link} className="result-btn waves-effect waves-light btn">View</a>
                 <Button
-                    onClick={()=>{
-                        handleBookDelete(bookObj.id)
-                    }}
+                    onClick={props.click}
                     className='result-btn'>
                     Delete
                 </Button>

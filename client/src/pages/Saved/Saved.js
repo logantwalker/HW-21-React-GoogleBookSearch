@@ -1,38 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import Book from '../../components/SavedBooks/Book/Book';
 import API from '../../utils/API';
-import SavedBooks from '../../components/SavedBooks/SavedBooks';
 import { Icon, Row } from 'react-materialize';
 import 'materialize-css'
 
 const Saved = () => {
     const [booksObj, setBooks] = useState({
         books: [],
-        message: "Save some books to get started!",
-        rerender: false
+        message: "Save some books to get started!"
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         getSavedBooks();
-        initRenderCheck();
-        console.log('useEffect')
-    },[]);
-    
-    const initRenderCheck = () =>{
-        setBooks({
-            books: booksObj.books,
-            message: booksObj.message,
-            rerender: false
-        })
-    }
-
-    const didDelete = () =>{
-        setBooks({
-            books: booksObj.books,
-            message: booksObj.message,
-            rerender: true
-        })
-    }
-    
+    }, []);
 
     const getSavedBooks = () => {
         API.getSavedBooks()
@@ -44,10 +24,45 @@ const Saved = () => {
             )
             .catch(err => console.log(err));
     };
+    const handleBookDelete = id => {
+        API.deleteBook(id).then(res => getSavedBooks());
+    };
+
+
+    let results;
+    if (booksObj.books.length) {
+        results = (
+            booksObj.books.map(book => {
+                return (
+                    <Book
+                        key={book.googleId}
+                        bookId={book._id}
+                        title={book.title}
+                        subtitle={book.subtitle}
+                        link={book.link}
+                        authors={book.authors.join(", ")}
+                        description={book.description}
+                        image={book.image}
+                        click={() => handleBookDelete(book._id)}
+                    />
+                )
+            })
+        )
+    }
+    else {
+        results = <h5 className='center-align'>{booksObj.message}</h5>
+    }
 
     return (
         <div className='container'>
-            <SavedBooks message={booksObj.message} res={booksObj.books} />
+            <div className='search-card'>
+                <Row className='card-header'>
+                    <h6 className='card-title'> <Icon tiny>book</Icon>Saved Books</h6>
+                </Row>
+                <Row className='search-results'>
+                    {results}
+                </Row>
+            </div>
         </div>
     );
 }
